@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vite-project</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <a
+      href="http://localhost:4000/auth?response_type=code&client_id=client_XfZmr7NaFI&redirect_uri=http://localhost:5173&scope=openid email&state=xyz123&code_challenge=CSGKaQg3Y71YEL4BPCV6PNF-2AfTBV9pXU8PnS1ItWA&code_challenge_method=S256"
+    >
+      ログイン
+    </a>
+
+    <script type="module" src="/js/main.js"></script>
+    <script type="module">
+      // 1. ランダムな code_verifier を生成（43〜128文字）
+      const codeVerifier = [...crypto.getRandomValues(new Uint8Array(64))]
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+      // 2. SHA-256 ハッシュ → Base64URL エンコード
+      async function generateCodeChallenge(verifier) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(verifier);
+        const digest = await crypto.subtle.digest("SHA-256", data);
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(digest)))
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")
+          .replace(/=+$/, "");
+        return base64;
+      }
+      const codeChallenge = await generateCodeChallenge(codeVerifier);
+      console.log(codeChallenge);
+    </script>
+  </body>
+</html>

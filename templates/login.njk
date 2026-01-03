@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+  <!-- Shoelace Web Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/themes/light.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container" style="max-width: 480px;">
+      <h1 class="title has-text-centered">🍄 ログイン</h1>
+      {% if error_description %}
+        <div class="notification is-danger">{{ error_description }}</div>
+      {% endif %}
+      <form method="POST" action="/interaction/{{uid}}/login">
+        <input type="hidden" name="uid" value="{{ uid }}"/>
+        <input type="hidden" name="_csrf" value="{{csrf_token}}">
+        <div class="field">
+          <label class="label">ユーザー名</label>
+          <div class="control">
+            <sl-input name="username" placeholder="ユーザー名を入力" required></sl-input>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">パスワード</label>
+          <div class="control">
+            <sl-input name="password" type="password" placeholder="パスワードを入力" required></sl-input>
+          </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered" style="margin-top: 1.5rem;">
+          <div class="control">
+            <sl-button type="submit" variant="primary">ログイン</sl-button>
+          </div>
+        </div>
+
+        <p class="has-text-centered is-size-7" style="margin-top: 1rem;">
+          パスワードをお忘れですか？  
+          <a href="/forgot-password">こちらから再設定</a>
+        </p>
+
+        <p class="has-text-centered is-size-7" style="margin-top: 2rem;">
+          このサービスは <strong>{{ params.client_id }}</strong> によってリクエストされています。
+        </p>
+      </form>
+    </div>
+  </section>
+  <script>
+    const form = document.getElementById('login-form'); 
+    form.addEventListener('submit', (e) => {     
+      const username = document.getElementById('sl-username').value; 
+      const password = document.getElementById('sl-password').value; 
+      form.querySelector('input[name="username"]').value = username; 
+      form.querySelector('input[name="password"]').value = password;
+      console.log(uid);
+    });
+  </script>
+</body>
+</html>

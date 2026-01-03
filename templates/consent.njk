@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/themes/light.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">🍄 アクセスの許可</h1>
+
+      <p class="subtitle">
+        <strong>{{ params.client_id }}</strong> が以下の情報へのアクセスをリクエストしています：
+      </p>
+
+      <ul>
+        {% for scope in params.scope.split(' ') %}
+          <li>🔐 {{ scope }}</li>
+        {% endfor %}
+      </ul>
+      <form id="consent-form" method="POST" action="/interaction/{{ uid }}/confirm" style="margin-top: 2rem;">
+        <input type="hidden" name="uid" value="{{ uid }}">
+        <input type="hidden" name="action" id="consent-action" value="confirm">
+      </form>
+        <sl-button id="btn-confirm" variant="primary">許可する</sl-button>
+        <sl-button id="btn-cancel" variant="danger">拒否する</sl-button>
+    </div>
+  </section>
+  <script>
+    const form = document.getElementById('consent-form');
+    const actionInput = document.getElementById('consent-action');
+
+    document.getElementById('btn-confirm').addEventListener('click', () => {
+      console.log("confirm");
+      actionInput.value = 'confirm';
+      form.submit();
+    });
+
+    document.getElementById('btn-cancel').addEventListener('click', () => {
+      console.log("cancel");
+      actionInput.value = 'cancel';
+      form.submit();
+    });
+  </script>
+</body>
+</html>

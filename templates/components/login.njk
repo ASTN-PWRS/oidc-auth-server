@@ -1,0 +1,38 @@
+    <div class="container" style="max-width: 480px;">
+      <h1 class="title has-text-centered">🍄 ログイン</h1>
+      {% if error_description %}
+        <div class="notification is-danger">{{ error_description }}</div>
+      {% endif %}
+      <form method="POST" action="/interaction/{{uid}}/login">
+        <input type="hidden" name="uid" value="{{ uid }}"/>
+
+        <div class="field">
+          <label class="label">ユーザー名</label>
+          <div class="control">
+            <sl-input name="username" placeholder="ユーザー名を入力" required></sl-input>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">パスワード</label>
+          <div class="control">
+            <sl-input name="password" type="password" placeholder="パスワードを入力" required></sl-input>
+          </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered" style="margin-top: 1.5rem;">
+          <div class="control">
+            <sl-button type="submit" variant="primary">ログイン</sl-button>
+          </div>
+        </div>
+
+        <p class="has-text-centered is-size-7" style="margin-top: 1rem;">
+          パスワードをお忘れですか？  
+          <a href="/forgot-password">こちらから再設定</a>
+        </p>
+
+        <p class="has-text-centered is-size-7" style="margin-top: 2rem;">
+          このサービスは <strong>{{ params.client_id }}</strong> によってリクエストされています。
+        </p>
+      </form>
+    </div>
