@@ -4,7 +4,12 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 
-//middleware
+import { oidc } from "../oidc/index.js";
+// router
+import { createApiRouter } from "../routes/api.js";
+import { createWebRouter } from "../routes/web.js";
+
+// middleware
 import { scriptCollector } from "../middleware/scriptCollector.js";
 
 export const app = express();
@@ -35,3 +40,9 @@ app.use((err, req, res, next) => {
     res.status(500).send("サーバーエラー");
   }
 });
+
+// router
+app.use("/", createWebRouter(oidc));
+app.use("/", createApiRouter(oidc));
+//最後に設定
+app.use(oidc.callback());

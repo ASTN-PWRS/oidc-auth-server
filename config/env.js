@@ -10,7 +10,6 @@ export const config = {
   },
   redisUrl: process.env.REDIS_URL,
   issuer: process.env.OIDC_ISSUER,
-  emailDomain: process.env.OIDC_EMAIL_DOMAIN,
   port: process.env.PORT || 4000,
   oidc: {
     basepath: process.env.OIDC_BASEPATH,
