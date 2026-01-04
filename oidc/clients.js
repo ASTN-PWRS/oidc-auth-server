@@ -2,6 +2,7 @@ import { pgPool } from "../db/pg.js";
 import { redis } from "../db/redis.js";
 
 export async function loadClientsToRedis() {
+  await redis.connect();
   const res = await pgPool.query("SELECT * FROM oidc_clients");
   for (const client of res.rows) {
     delete client.created_at;

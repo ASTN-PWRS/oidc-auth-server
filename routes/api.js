@@ -1,17 +1,12 @@
 // api.js
 import express from "express";
-import { jwks } from "../config/jwks.js";
+//import { publicJwks } from "../oidc/jwks.js";
 
 export function createApiRouter(provider) {
   const router = express.Router();
 
   router.get("/hello", (req, res) => {
     res.json({ message: "Hello from modular API!" });
-  });
-
-  router.get("/.well-known/jwks.json", (req, res) => {
-    const pub = jwks.keys.map(({ d, p, q, dp, dq, qi, ...k }) => k);
-    res.json({ keys: pub });
   });
 
   router.post("/interaction/:uid/confirm", async (req, res) => {

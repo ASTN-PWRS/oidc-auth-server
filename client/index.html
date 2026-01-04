@@ -17,10 +17,28 @@
 
     <script type="module" src="/js/main.js"></script>
     <script type="module">
+      function generateState(length = 32) {
+        const array = new Uint8Array(length);
+        window.crypto.getRandomValues(array);
+        return Array.from(array, (b) => b.toString(16).padStart(2, "0")).join(
+          ""
+        );
+      }
+      const state = generateState();
+      console.log(state);
+      sessionStorage.setItem("oidc_state", state); // 一時的に保存
+      const trimmedPath = (path) => {
+        return path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;
+      };
+      const redirectUri = trimmedPath(
+        window.location.origin + window.location.pathname
+      );
+      console.log(redirectUri);
       // 1. ランダムな code_verifier を生成（43〜128文字）
       const codeVerifier = [...crypto.getRandomValues(new Uint8Array(64))]
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
+      sessionStorage.setItem("pkce_code_verifier", codeVerifier);
       // 2. SHA-256 ハッシュ → Base64URL エンコード
       async function generateCodeChallenge(verifier) {
         const encoder = new TextEncoder();
@@ -34,6 +52,16 @@
       }
       const codeChallenge = await generateCodeChallenge(codeVerifier);
       console.log(codeChallenge);
+
+      const authorizeUrl =
+        `https://auth.example.com/authorize?` +
+        `response_type=code&` +
+        `client_id=your-client-id&` +
+        `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+        `scope=openid email&` +
+        `state=${state}`;
+
+      //window.location.href = authorizeUrl;
     </script>
   </body>
 </html>
