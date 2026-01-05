@@ -3,14 +3,26 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import path from "path";
 
 export default defineConfig({
-  root: path.resolve(__dirname, "client"),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "client"),
+  publicDir: "dummy",
+  build: {
+    outDir: "public/shoelace",
+    emptyOutDir: false,
+    rollupOptions: {
+      input: "./resources/main.js",
+      output: {
+        entryFileNames: "shoelace.js",
+        assetFileNames: "shoelace[extname]",
+      },
     },
   },
-  server: {
-    port: 5173,
-    strictPort: true,
-  },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: "node_modules/@shoelace-style/shoelace/dist/assets",
+          dest: "",
+        },
+      ],
+    }),
+  ],
 });

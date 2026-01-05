@@ -4,10 +4,15 @@
   <meta charset="UTF-8">
   <title>{% block title %}タイトル{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/shoelace/shoelace.css">
   <!-- Bulma CSS -->
-  <link rel="stylesheet" href="/css/bulma.min.css">
-
+  <link rel="stylesheet" href="/css/bulma-custom.css">
   <!-- Shoelace Web Components -->
-  <script type="module" src="/js/shoelace.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/themes/light.css">
+  <script type="module" src="/shoelace/shoelace.js">
+    setBasePath('shoelace');
+  </script>
 </head>
+<body>
+{% block main %}{% endblock %}
+{% block script %}{% endblock %}
+</body>

@@ -1,13 +1,3 @@
-// import path from "path";
-// import express from "express";
-// import cors from "cors";
-// import cookieParser from "cookie-parser";
-// import nunjucks from "nunjucks";
-// import { fileURLToPath } from "url";
-// import { oidc } from "./oidc/index.js";
-// import { createApiRouter } from "./routes/api.js";
-// import { createWebRouter } from "./routes/web.js";
-
 import { createServer } from "http";
 import { config } from "./config/env.js";
 import { loadClientsToRedis } from "./oidc/clients.js";

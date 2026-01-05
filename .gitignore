@@ -11,3 +11,8 @@ node_modules/
 !.env.example
 
 config/*.json
+public/shoelace
+public/css/*
+public/js/*
+!public/css
+!public/js

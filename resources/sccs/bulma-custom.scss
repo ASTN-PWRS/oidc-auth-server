@@ -1,0 +1,11 @@
+@use "custom-variables"; // 変数を先に読み込む
+@use "bulma/sass/utilities";
+@use "bulma/sass/themes";
+@use "bulma/sass/base";
+//@use "bulma/sass/elements";
+//@use "bulma/sass/form";
+//@use "bulma/sass/components";
+@use "bulma/sass/grid";
+@use "bulma/sass/layout";
+@use "bulma/sass/base/skeleton";
+@use "bulma/sass/helpers";

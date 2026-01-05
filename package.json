@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "vite",
+    "client": "vite --config vite.config.client.js",
     "server": "cross-env NODE_ENV=development DEBUG=oidc-provider:* node ./server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build:css": "sass --load-path=node_modules resources/sccs/bulma-custom.scss public/css/bulma-custom.css",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
   },
   "dependencies": {
     "@shoelace-style/shoelace": "^2.20.1",
+    "bulma": "^1.0.4",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "cross-env": "^10.1.0",
@@ -34,6 +37,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "sass": "^1.97.1",
     "vite": "^7.3.0",
     "vite-plugin-static-copy": "^3.1.4"
   }
